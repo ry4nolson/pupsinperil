@@ -1,0 +1,35 @@
+
+      <nav class="navbar <%= css_class %>">
+        <div class="container">
+          <div class="navbar-brand">
+            <% if logo %>
+            <a class="navbar-item" href="/"><img src="<%= image_url("pups-in-peril-logo.png") %>" style="width:125px;height:41px;max-height:none;" alt="Pups in Peril: Dog Rescue"></a>
+            <% end %>
+            <div class="navbar-burger burger" data-target=".navbar.<%= css_class %> .navbar-menu"><span></span><span></span><span></span></div>
+          </div>
+      
+          <div class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="/">Home</a>
+              <a class="navbar-item" href="/about">About</a>
+              <a class="navbar-item" href="/our-dogs">Adoptable Pets</a>
+              <a class="navbar-item" href="/adoption">Adoption</a>
+              <a class="navbar-item" href="/contact-us">Contact</a>
+              <a class="navbar-item" href="/foster-application">Foster</a>
+              <a class="navbar-item" href="/happy-tails">Happy Tails</a>
+            </div>
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="control"><a class="button is-primary" href="/donate">Donate</a></div> 
+              </div>
+              <a class="navbar-item" href="https://www.facebook.com/PupsInPeril" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </nav>
+      <script>
+        $(document).off("click", ".navbar-burger").on("click", ".navbar-burger", function(e){
+          var el = $(e.currentTarget);
+          
+          $(el.attr("data-target")).toggleClass('is-active');
+        })
+      </script>

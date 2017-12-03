@@ -1,0 +1,18 @@
+<% if current_user %>
+    <div class="container" style="margin:10px auto;">
+      <div class="message is-info">
+        <div class="message-body has-text-centered">
+          You are currently logged in as <%= current_user["email"] %>. <a href="/logout">Log out</a>
+        </div>
+      </div>
+    </div>
+<% end %>
+    <div class="quote">
+      <blockquote>
+      Until one has loved an animal a part of one’s soul remains unawakened
+      <cite>Anatole France</cite>
+      </blockquote>
+    </div>
+    <header>
+      <%= render partial: "shared/nav", locals: { css_class: "is-link", logo:true} %>
+    </header>

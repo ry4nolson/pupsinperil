@@ -1,0 +1,30 @@
+<%= form_tag '/login' do %>
+<div class="columns">
+  <div class="column is-half is-offset-one-quarter">
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <%= text_field_tag :email, "",  { class: "input"} %>
+        <span class="icon is-small is-left">
+          <i class="fa fa-user"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <p class="control has-icons-left">
+        <%= password_field_tag :password, "",  { class: "input"} %>
+        <span class="icon is-small is-left">
+          <i class="fa fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    
+    <div class="field">
+      <p class="control">
+        <button class="button is-success" type="submit" name="commit" style="width:100%">
+          Login
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+<% end %>

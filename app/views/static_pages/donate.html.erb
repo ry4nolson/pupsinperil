@@ -1,0 +1,6 @@
+<div class="page-content" data-block="donate">
+<%= raw Block.where(key: "donate").first[:content]  %>
+</div>
+<% if current_user %>
+<!--<button class="edit-content button">Edit Content</button>--><button class="save-content button is-link">Save</button>
+<% end %>

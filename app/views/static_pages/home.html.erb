@@ -1,0 +1,83 @@
+<div class="page-content" data-block="home">
+<%= raw Block.where(key: "home").first[:content]  %>
+</div>
+<% if current_user %>
+<!--<button class="edit-content button">Edit Content</button>--><button class="save-content button is-link">Save</button>
+<% end %>
+
+<div class="columns">
+    <div id="posts" class="column is-10 is-offset-1">
+        <% @posts["data"].each do |post| %>
+        <article class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+                <a href="https://facebook.com/<%= post["id"] %>" target="_blank">
+                    <%= image_tag post["picture"] %>
+                </a>
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+                <strong><a href="https://www.facebook.com/PupsInPeril/" target="_blank">Pups in Peril</a></strong>
+                <small><%= post["story"] && post["story"].sub("Pups In Peril", "") %></small>
+                <small><%= DateTime.parse(post["created_time"]).strftime("%m/%d/%Y %I:%M%p") %></small>
+                <br>
+                <%= post["message"] %>
+                <br>
+                <a href="https://facebook.com/<%= post["id"] %>" target="_blank">View on Facebook</a>
+            </div>
+          </div>
+        </article>
+        <% end %>
+    </div>
+</div>
+
+    <div class="has-text-centered">
+    <a class="load-more button is-link" href="/home/load" data-next="<%= @next %>">Load More</a>
+    </div>
+
+<script>
+    $(document).on("click", ".load-more", function(e){
+        var el = $(e.currentTarget);
+        
+        $.get(el.attr("href") + "/" + el.attr("data-next"), function(res){
+            var posts = res[0];
+            var next = res[1];
+            
+            for (var i = 0, l = posts["data"].length; i < l; i++){
+                var post = posts["data"][i];
+                var article = $("<article class='media' style='display:none;'>");
+                post.story = post.story || "";
+                
+                article.html(""+
+      '<figure class="media-left">' +
+        '<p class="image is-64x64">' +
+            '<a href="https://facebook.com/' + post.id + '" target="_blank">' +
+                '<img src="' + post.picture + '">' +
+            '</a>' +
+        '</p>' +
+      '</figure>' +
+      '<div class="media-content">' +
+        '<div class="content">' +
+            '<strong><a href="https://www.facebook.com/PupsInPeril/" target="_blank">Pups in Peril</a></strong> ' +
+            '<small>' + post.story.replace("Pups In Peril", "") + '</small> ' +
+            '<small>' +  new Date(post.created_time).toString("%m/%d/%Y %I:%M%p") + '</small>' +
+            '<br>' +
+            post.message +
+            '<br>' +
+            '<a href="https://facebook.com/' + post.id + '" target="_blank">View on Facebook</a>' +
+        '</div>' +
+      '</div>')
+                
+                $("#posts").append(article);
+                article.fadeIn(1000);
+            }
+            if (next)
+                $(".happy-tails-load-more").attr("data-next", next)
+            else
+                $(".happy-tails-load-more").hide();
+        })
+        
+        e.preventDefault();
+    });
+</script>

@@ -1,0 +1,1 @@
+simple website Rails project.

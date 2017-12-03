@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pups in Peril<%= if content_for?(:title) 
+    " - " + yield(:title) end%></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.css" />
+  <link href="https://cdn.quilljs.com/1.1.9/quill.snow.css" rel="stylesheet">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.min.js"></script>
+
+  <% if current_user %>
+  <script src="https://cdn.quilljs.com/1.1.9/quill.js"></script>
+  <% end %>
+</head>
+<body>
+    <%= render partial: "shared/header" %>
+    <section class="section">
+      <% if current_user %>
+      <div class="container result">
+      </div>
+      <% end %>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </section>
+    <%= render partial: "shared/footer" %>
+
+    <% if current_user %>
+    <script>
+      var quill = new Quill('.page-content', {
+        theme: 'snow'
+      });
+      
+      $(document).on("click", ".save-content", function(e){
+        $.ajax({
+          method: "post",
+          url: "/ajax/save/" + $(".page-content").attr("data-block"), 
+          data: {
+            "content": quill.root.innerHTML
+          }, 
+          success: function(response){
+            $(".result").html("<div class='message is-success'><div class='message-body'>" + response.key + " content saved successfully!</div></div>").fadeIn();
+            setTimeout(function(){
+              $(".result").fadeOut()
+            }, 2000)
+          },
+          error: function(response){
+            $(".result").html("<div class='message is-danger'><div class='message-body'>There was an error saving content.</div></div>").fadeIn();
+            setTimeout(function(){
+              $(".result").fadeOut()
+            }, 2000)
+          }
+        });
+      });
+    </script>
+    <% end %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
+  </body>
+</html>

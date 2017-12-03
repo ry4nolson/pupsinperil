@@ -1,0 +1,54 @@
+<div class="page-content" data-block="happytails">
+<%= raw Block.where(key: "happytails").first[:content]  %>
+</div>
+<% if current_user %>
+<!--<button class="edit-content button">Edit Content</button>--><button class="save-content button is-link">Save</button>
+<% end %>
+
+
+<nav id='thumbs'>
+    <% @images["data"].each do |image| %>
+    <% puts image %>
+    <a class="facebook-photo" 
+        href="<%= image["source"] %>" 
+        data-lightbox="happytails" 
+        data-title="<%= image["name"] %> | <a href='https://facebook.com/<%= image["id"] %>' target='_blank'>View on Facebook</a>"
+        style="background:url(<%= image["source"] %>"></a>
+    <% end %>
+</nav>
+
+    <div class="has-text-centered">
+    <a class="happy-tails-load-more button is-link" href="/happy-tails/load" data-next="<%= @next %>">Load More</a>
+    </div>
+
+<script>
+    $(document).on("click", ".happy-tails-load-more", function(e){
+        var el = $(e.currentTarget);
+        
+        $.get(el.attr("href") + "/" + el.attr("data-next"), function(res){
+            var images = res[0];
+            var next = res[1];
+            
+            for (var i = 0, l = images["data"].length; i < l; i++){
+                var img = images["data"][i];
+                var title = img.name;
+                var a = $("<a>");
+                a
+                    .attr("style", "display:none")
+                    .attr("class", "facebook-photo")
+                    .attr("data-lightbox", "happytails")
+                    .attr("data-title", title + " | <a href='https://facebook.com/" + img.id + "' target='_blank'>View on Facebook</a>")
+                    .attr("href", img.source)
+                    .css("background", "url('" + img.source +"')");
+                $("#thumbs").append(a);
+                a.fadeIn(1000);
+            }
+            if (next)
+                $(".happy-tails-load-more").attr("data-next", next)
+            else
+                $(".happy-tails-load-more").hide();
+        })
+        
+        e.preventDefault();
+    });
+</script>

@@ -1,0 +1,10 @@
+<div class="page-content" data-block="foster">
+<%= raw Block.where(key: "foster").first[:content]  %>
+</div>
+<% if current_user %>
+<button class="edit-content button">Edit Content</button><button class="save-content button is-link">Save</button>
+<% end %>
+
+<div class="has-text-centered">
+    <a class="button is-link" href="https://form.jotform.com/70595719418164" data-lity>Foster Form</a>
+</div>

@@ -1,0 +1,54 @@
+<div class="columns is-mobile">
+	<div class="column is-one-third-mobile is-one-half-tablet is-one-half">
+		<div class="main-photo">
+			<a
+				style="background-image:url(<%= @dog["media"]["photos"]["photo"].select { |photo| photo["@id"] == "1" && photo["@size"] == "x" }.first["$t"] %>);"
+				href="<%= @dog["media"]["photos"]["photo"].select { |photo| photo["@id"] == "1" && photo["@size"] == "x" }.first["$t"] %>" data-lity>
+				<div class="zoom">+ Zoom</div>
+			</a>
+		</div>
+		<a class="button is-primary" href="https://www.petfinder.com/dog/dog-<%= @dog["id"]["$t"] %>/tx/beaumont/humane-society-of-southeast-texas-tx155/" target="_blank">View on PetFinder.com</a>
+	</div>
+	<div class="column">
+		<h2><%= @dog["name"]["$t"] %></h2>
+		<h5><%= @dog["age"]["$t"] %>  - <% if @dog["sex"]["$t"] == "M" %>Male<% else %>Female<% end %> - <%= @dog["size"]["$t"] %></h5>
+		<div class="breeds">
+			<% @dog["breeds"] && @dog["breeds"]["breed"].each do |breed| %>
+				<span class="tag is-info"><%= breed["$t"] rescue breed %></span>
+			<% end %>
+		</div>
+		<p>
+			<%= @dog["description"]["$t"] %>
+		</p>
+		
+		<div class="photos">
+			<% @dog["media"]["photos"]["photo"].select { |photo| photo["@size"] == "fpm" }.each_slice(4) do |row| %>
+			<div class="columns is-mobile">
+				<% row.each do |photo| %>
+				<div class="column is-one-half-mobile is-one-quarter-tablet is-one-quarter">
+					<a 
+						style="background-image:url(<%= photo["$t"] %>);"
+						href="<%= @dog["media"]["photos"]["photo"].select { |image| image["@id"] == photo["@id"] && image["@size"] == "x" }.first["$t"] %>">
+						
+					</a>
+				</div>
+				<% end %>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).on("click", ".photos a", function(e){
+		var href = $(e.currentTarget).attr("href");
+		
+		$(".main-photo a")
+			.attr("href", href)
+			.css("background-image", "url(" + href + ")");
+		e.preventDefault();
+	})
+</script>
+<pre>
+<%= JSON.pretty_generate @dog %>
+</pre>

@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get 'happy-tails', to: 'static_pages#happy_tails'
   get 'happy-tails-2', to: redirect("/happy-tails", status:301)
   
+  get 'dog/:id', to: "dog#show"
+  
   post 'ajax/save/:block', to: 'ajax#save'
   get 'happy-tails/load/:next', to: 'static_pages#happy_tails'
   get 'home/load/:next', to: 'static_pages#home'

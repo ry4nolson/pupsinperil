@@ -23,36 +23,15 @@
 }
 </style>
 <div class="petfinder-dogs has-text-centered"> 
-    <% @petfinder_dogs["petfinder"]["pets"]["pet"].each_slice(4) do |pets| %>
+    <% @petfinder_dogs["petfinder"]["pets"]["pet"].reverse.each_slice(4) do |pets| %>
     <div class="columns">
     <% pets.each do |pet| %>
-    <div class="column is-one-quarter">
-    <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <a href="https://www.petfinder.com/dog/dog-<%= pet["id"]["$t"] %>/tx/beaumont/humane-society-of-southeast-texas-tx155/" target="_blank">
-        <div style="background-image:url(<%= pet["media"]["photos"]["photo"].select { |photo| photo["@size"] == "pn" || photo["@size"] == "x" }.first["$t"] %>}"></div>
-      </a>
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-content">
-        <div class="is-size-6"><span class="title"><%= pet["name"]["$t"] %></span> <small class="is-size-7">| <%= pet["sex"]["$t"] %></small></div>
+      <div class="column is-one-quarter">
+        <a href="/dog/<%= pet["id"]["$t"] %>" data-lity style="background-image:url(<%= pet["media"]["photos"]["photo"].select { |photo| photo["@size"] == "pn" || photo["@size"] == "x" }.first["$t"] %>}">
+          <span class="name"><%= pet["name"]["$t"] %></span>
+        </a>
       </div>
-    </div>
-
-    <!--<div class="content">-->
-    <!--  Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
-    <!--  Phasellus nec iaculis mauris. <a>@bulmaio</a>.-->
-    <!--  <a href="#">#css</a> <a href="#">#responsive</a>-->
-    <!--  <br>-->
-    <!--  <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>-->
-    <!--</div>-->
-  </div>
-</div>
-        </div>
-        <% end %>
-        </div>
     <% end %>
-</div>
+    </div>
+    <% end %>
+  </div>

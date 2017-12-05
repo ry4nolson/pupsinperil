@@ -44,6 +44,8 @@ p, ul, ol {
     margin-bottom: 20px;
 }
 
+h1,h2,h3,h4,h5,h6 { font-weight:bold; }
+
 h1 {
   font-size: 2em;
   margin-bottom: 0.5em;
@@ -420,4 +422,35 @@ li.ql-indent-9.ql-direction-rtl.ql-align-right {
 
 @media screen and (max-width: 700px){
   .section {padding:1em 0; }
+  .lity-iframe-container { padding-top:100%; }
 }
+
+
+@media screen and (max-width: 400px){
+  .section {padding:1em 0; }
+  .lity-iframe-container { padding-top:125%; }
+}
+
+.main-photo a, .petfinder-dogs a, .photos a {
+  display:block;
+  background-size:cover;
+  background-position: center center;
+  padding-top:100%;
+  margin-bottom:20px;
+  position: relative;
+}
+
+.petfinder-dogs a .name, .main-photo a .zoom {
+  position: absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  text-align:center;
+  color:#fff;
+  background:rgba(0,0,0,0.5);
+  padding:5px 10px;
+  font-weight: bold;
+  font-size:1.5em;
+}
+
+.breeds { padding-bottom:20px; }

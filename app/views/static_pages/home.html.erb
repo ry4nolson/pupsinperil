@@ -20,7 +20,7 @@
             <div class="content">
                 <strong><a href="https://www.facebook.com/PupsInPeril/" target="_blank">Pups in Peril</a></strong>
                 <small><%= post["story"] && post["story"].sub("Pups In Peril", "") %></small>
-                <small><%= DateTime.parse(post["created_time"]).strftime("%m/%d/%Y %I:%M%p") %></small>
+                <small class="posted_at"><%= post["created_time"] %></small>
                 <br>
                 <%= post["message"] %>
                 <br>
@@ -37,12 +37,17 @@
     </div>
 
 <script>
+    $(".posted_at").each(function(i,el){
+        $(el).text(moment($(el).text()).zone().fromNow());
+    });
     $(document).on("click", ".load-more", function(e){
         var el = $(e.currentTarget);
         
         $.get(el.attr("href") + "/" + el.attr("data-next"), function(res){
             var posts = res[0];
             var next = res[1];
+            
+            el.attr("data-next", next);
             
             for (var i = 0, l = posts["data"].length; i < l; i++){
                 var post = posts["data"][i];
@@ -61,7 +66,7 @@
         '<div class="content">' +
             '<strong><a href="https://www.facebook.com/PupsInPeril/" target="_blank">Pups in Peril</a></strong> ' +
             '<small>' + post.story.replace("Pups In Peril", "") + '</small> ' +
-            '<small>' +  new Date(post.created_time).toString("%m/%d/%Y %I:%M%p") + '</small>' +
+            '<small class="posted_at">' +  moment(post.created_time).fromNow() + '</small>' +
             '<br>' +
             post.message +
             '<br>' +

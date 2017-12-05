@@ -6,6 +6,14 @@ class DogController < ApplicationController
 		
 		@dog = @dog["petfinder"]["pet"]
 		
+		@dog["tags"] = []
+		@dog["options"] && @dog["options"]["option"].each do |option|
+			case option["$t"]
+			when "altered"
+				@dog["tags"].shift ""
+			end
+		end
+		
 		#dumb hack, if there is only 1 breed, it's a hash instead of an array of hashes.
 		if @dog["breeds"]["breed"].count == 1
 			@dog["breeds"]["breed"] = [@dog["breeds"]["breed"]]

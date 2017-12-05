@@ -32,6 +32,8 @@ gem 'raygun4ruby'
 
 gem 'dotenv'
 
+gem 'remotipart', '~> 1.2'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

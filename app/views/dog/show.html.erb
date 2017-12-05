@@ -11,7 +11,12 @@
 	</div>
 	<div class="column">
 		<h2><%= @dog["name"]["$t"] %></h2>
-		<h5><%= @dog["age"]["$t"] %>  - <% if @dog["sex"]["$t"] == "M" %>Male<% else %>Female<% end %> - <%= @dog["size"]["$t"] %></h5>
+		<h5><%= @dog["age"]["$t"] %>  - <% if @dog["sex"]["$t"] == "M" %>Male<% else %>Female<% end %></h5>
+		<div class="tags">
+			<% @dog["tags"].each do |tag| %>
+			<span class="tag"><%= tag %></span>
+			<% end %>
+		</div>
 		<div class="breeds">
 			<% @dog["breeds"] && @dog["breeds"]["breed"].each do |breed| %>
 				<span class="tag is-info"><%= breed["$t"] rescue breed %></span>
@@ -49,6 +54,3 @@
 		e.preventDefault();
 	})
 </script>
-<pre>
-<%= JSON.pretty_generate @dog %>
-</pre>

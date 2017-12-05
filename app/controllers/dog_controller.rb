@@ -9,8 +9,14 @@ class DogController < ApplicationController
 		@dog["tags"] = []
 		@dog["options"] && @dog["options"]["option"].each do |option|
 			case option["$t"]
+			when "hasShots"
+				@dog["tags"].push "Shots up to date"
+			when "housetrained"
+				@dog["tags"].push "House Trained"
 			when "altered"
-				@dog["tags"].shift ""
+				@dog["tags"].push "Spayed/Neutered"
+			when "noDogs"
+				@dog["tags"].push "Prefers no other dogs"
 			end
 		end
 		

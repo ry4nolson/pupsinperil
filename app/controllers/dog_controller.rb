@@ -7,6 +7,14 @@ class DogController < ApplicationController
 		@dog = @dog["petfinder"]["pet"]
 		
 		@dog["tags"] = []
+		
+		puts @dog["options"]
+		
+		#dumb hack, if there is only 1 option, it's a hash instead of an array of hashes.
+		if @dog["options"]["option"].count == 1
+			@dog["options"]["option"] = [@dog["options"]["option"]]
+		end
+		
 		@dog["options"] && @dog["options"]["option"].each do |option|
 			case option["$t"]
 			when "hasShots"

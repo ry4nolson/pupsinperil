@@ -38,7 +38,7 @@
 
 <script>
     $(".posted_at").each(function(i,el){
-        $(el).text(moment($(el).text()).zone().fromNow());
+        $(el).text(moment($(el).text()).zone(-600).fromNow());
     });
     $(document).on("click", ".load-more", function(e){
         var el = $(e.currentTarget);
